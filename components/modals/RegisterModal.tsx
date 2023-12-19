@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import axios from 'axios';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
@@ -20,7 +21,12 @@ const RegisterModal = () => {
     try {
       setIsLoading(true);
 
-      // TODO: Add register and login
+      await axios.post('/api/auth/signup', {
+        email,
+        password,
+        username,
+        name,
+      });
 
       registerModal.onClose();
     } catch (error) {
@@ -28,7 +34,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal]);
+  }, [registerModal, email, password, username, name]);
 
   const onToggle = useCallback(() => {
     if (isLoading) {
